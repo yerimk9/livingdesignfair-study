@@ -1,0 +1,136 @@
+header {
+  height: 73px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  .top-area {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(auto, 85px) repeat(6, 1fr) minmax(auto, 85px);
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.75px;
+
+    li {
+      padding: 0 20px;
+      position: relative;
+      @include flexCenter;
+
+      & + li::after {
+        content: "";
+        display: inline-block;
+        width: 2px;
+        height: 35px;
+        background: $border-color1;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-40%);
+      }
+
+      &.hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 7px;
+
+        div {
+          width: 26px;
+          height: 2px;
+          background: $border-color1;
+        }
+      }
+
+      &.logo {
+        a {
+          img {
+            max-height: 52px;
+            width: auto;
+
+            &.m {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  hr {
+    border: 1px solid $border-color1;
+  }
+
+  .bottom-area {
+    display: none;
+    grid-template-columns: minmax(auto, 85px) repeat(6, 1fr) minmax(auto, 85px);
+    font-weight: 400;
+
+    li {
+      @include flex(flex-start, center, column);
+      gap: 12px;
+      padding: 14px 0;
+      text-align: center;
+      position: relative;
+
+      &.login {
+        grid-column: 1 / -1;
+        justify-self: flex-end;
+        padding: 15px 15px 15px 90%;
+        margin-top: 5px;
+        text-align: end;
+        width: max-content;
+        border: 2px solid $border-color1;
+        border-width: 2px 0px;
+      }
+
+      & + li:not(.login)::after {
+        content: "";
+        display: inline-block;
+        width: 2px;
+        height: 85%;
+        background: $border-color1;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+
+@media all and (max-width: 1024px) {
+  header {
+    .top-area {
+      display: flex;
+      justify-content: space-between;
+      li {
+        &.logo {
+          a {
+            img {
+              max-height: 40px;
+              &.pc {
+                display: none;
+              }
+              &.m {
+                display: block;
+              }
+            }
+          }
+        }
+        &:not(.logo):not(.hamburger) {
+          display: none;
+        }
+        & + li::after {
+          display: none;
+        }
+
+        &.hamburger {
+          display: flex;
+        }
+      }
+    }
+  }
+}
