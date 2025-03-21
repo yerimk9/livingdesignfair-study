@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 body {
-  background: $bg-color;
+  background: var(--po1);
 }
 html,
 body,
@@ -120,7 +120,7 @@ section {
   display: none;
 }
 body {
-  // line-height: 1;
+  /* line-height: 1; */
 }
 menu,
 ol,
@@ -147,13 +147,13 @@ a {
   display: block;
   text-decoration: none;
   background: transparent;
-  color: $border-color1;
+  color: var(--black1);
   cursor: pointer;
+}
 
-  &:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-decoration-color: $border-color1;
-    text-underline-offset: 3px;
-  }
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--black1);
+  text-underline-offset: 3px;
 }

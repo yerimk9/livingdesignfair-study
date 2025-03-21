@@ -1,0 +1,194 @@
+header {
+  height: 73px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+header:hover .bottom-area {
+  display: grid;
+}
+/* top-area */
+header .top-area {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(auto, 85px) repeat(7, 1fr) minmax(auto, 85px);
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.75px;
+}
+header .top-area li {
+  padding: 0 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header .top-area li + li::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 35px;
+  background: var(--black1);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-40%);
+}
+header .top-area li.logo a img {
+  max-height: 52px;
+  width: auto;
+}
+header .top-area li.logo a img.m {
+  display: none;
+}
+header .top-area li.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 7px;
+  cursor: pointer;
+}
+header .top-area li.hamburger div {
+  width: 26px;
+  height: 2px;
+  background: var(--black1);
+}
+header .top-area li.hamburger.on div:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+header .top-area li.hamburger.on div:nth-child(2) {
+  display: none;
+}
+header .top-area li.hamburger.on div:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+header hr {
+  border: 1px solid var(--black1);
+}
+/* bottom-area */
+header .bottom-area {
+  display: none;
+  grid-template-columns: minmax(auto, 85px) repeat(7, 1fr) minmax(auto, 85px);
+  font-weight: 400;
+}
+header .bottom-area li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 0;
+  text-align: center;
+  position: relative;
+}
+header .bottom-area li.login {
+  grid-column: 1 / -1;
+  justify-self: flex-end;
+  padding: 15px 15px 15px 90%;
+  margin-top: 5px;
+  text-align: end;
+  min-width: max-content;
+  width: 100%;
+  border: 2px solid var(--black1);
+  border-width: 2px 0px;
+}
+header .bottom-area li + li:not(.login, .link)::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 85%;
+  background: var(--black1);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+header .bottom-area li.link.link::after {
+  display: none;
+}
+
+/* bottom-area-m */
+header .bottom-area-m {
+  display: none;
+}
+
+@media all and (max-width: 1200px) {
+  header .top-area,
+  header .bottom-area {
+    font-size: 14px;
+  }
+}
+@media all and (max-width: 1024px) {
+  header:hover .bottom-area {
+    display: none;
+  }
+
+  /* top-area */
+  header .top-area {
+    display: flex;
+    justify-content: space-between;
+  }
+  header .top-area li.logo a img {
+    max-height: 40px;
+  }
+  header .top-area li.logo a img.pc {
+    display: none;
+  }
+  header .top-area li.logo a img.m {
+    display: block;
+  }
+  header .top-area li:not(.logo):not(.hamburger) {
+    display: none;
+  }
+  header .top-area li + li::after {
+    display: none;
+  }
+  header .top-area li.hamburger {
+    display: flex;
+  }
+
+  /* bottom-area-m */
+  header .bottom-area-m {
+    display: block;
+  }
+  header .bottom-area-m > li {
+    cursor: pointer;
+    border-bottom: 2px solid var(--black1);
+  }
+  header .bottom-area-m > li:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px;
+  }
+  header .bottom-area-m > li:last-child button {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--black1);
+    text-underline-offset: 3px;
+  }
+  header .bottom-area-m > li > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+  }
+  header .bottom-area-m > li.on > div img {
+    transform: rotate(180deg);
+  }
+  header .bottom-area-m > li ul {
+    display: none;
+  }
+  header .bottom-area-m > li.on ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px;
+    background: var(--white);
+    border-top: 2px solid var(--black1);
+  }
+}

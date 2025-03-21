@@ -1,6 +1,6 @@
 import { IBM_Plex_Sans_KR } from "next/font/google";
 import "../styles/globals.css";
-import "../styles/index.css";
+import "../styles/reset.css";
 import Header from "../components/Header";
 
 export const metadata = {

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --po1: rgb(238 238 238 / 1);
+  --white: #fff;
+  --black1: #171717;
+  --black2: rgb(23 23 23 / 1);
+}

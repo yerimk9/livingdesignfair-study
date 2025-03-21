@@ -1,52 +1,48 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import "../styles/components/header.css";
 import Image from "next/image";
-import LogoImg from "../public/images/header_logo.png";
-import LogoMobileImg from "../public/images/header_logo_m.png";
-import { gsap } from "gsap";
+import LogoImg from "../public/header_logo.png";
+import LogoMobileImg from "../public/header_logo_m.png";
+import arrowDownImg from "../public/icon/icon_arrow_bottom.svg";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  const toggleMenuOpen = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const toggleSubMenuOpen = (num) => {
+    setIsSubMenuOpen((prev) =>
+      prev.map((item, idx) => (idx == num ? !item : false))
+    );
+  };
+
   useEffect(() => {
-    const headerTop = document.querySelector("#js-headerTop");
-    const header = document.querySelector("header");
-
-    function showMenu() {
-      gsap.to("#js-headerBottom", {
-        display: "grid",
-        duration: 0,
-      });
-    }
-
-    function hideMenu() {
-      gsap.to("#js-headerBottom", {
-        display: "none",
-        duration: 0,
-      });
-    }
-
-    function handleResize() {
-      if (window.innerWidth >= 1024) {
-        headerTop.addEventListener("mouseenter", showMenu);
-        header.addEventListener("mouseleave", hideMenu);
+    const subMenuItems = document.querySelectorAll(
+      "header .bottom-area-m > li"
+    );
+    subMenuItems.forEach((item, idx) => {
+      if (isSubMenuOpen[idx]) {
+        item.classList.add("on");
       } else {
-        headerTop.removeEventListener("mouseenter", showMenu);
-        header.removeEventListener("mouseleave", hideMenu);
+        item.classList.remove("on");
       }
-    }
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      headerTop.removeEventListener("mouseenter", showMenu);
-      header.removeEventListener("mouseleave", hideMenu);
-    };
-  }, []);
+    });
+  }, [isSubMenuOpen]);
 
   return (
     <header>
-      <ul className="top-area" id="js-headerTop">
+      <ul className="top-area">
         <li className="logo">
           <a href="/">
             <Image src={LogoImg} alt="서울리빙디자인페어 로고" className="pc" />
@@ -56,6 +52,9 @@ export default function Header() {
               className="m"
             />
           </a>
+        </li>
+        <li>
+          <a href="/">SLDF in 마곡</a>
         </li>
         <li>
           <a href="/">전시 소개</a>
@@ -78,15 +77,19 @@ export default function Header() {
         <li className="language">
           <button type="button">EN</button>
         </li>
-        <li className="hamburger">
+        <li
+          className={`hamburger ${isMenuOpen && "on"}`}
+          onClick={toggleMenuOpen}
+        >
           <div></div>
           <div></div>
           <div></div>
         </li>
       </ul>
       <hr />
-      <ul className="bottom-area" id="js-headerBottom">
+      <ul className="bottom-area">
         <li></li>
+        <li className="link"></li>
         <li>
           <a href="/">서울리빙디자인페어</a>
           <a href="/">주최 및 파트너</a>
@@ -124,93 +127,119 @@ export default function Header() {
         </li>
       </ul>
 
-      <ul className="bottom-area-m">
-        <li>
-          전시 소개
-          <ul>
-            <li>
-              <a href="/">서울리빙디자인페어</a>
-            </li>
-            <li>
-              <a href="/">주최 및 파트너</a>
-            </li>
-            <li>
-              <a href="/">아카이브</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          전시 구성
-          <ul>
-            <li>
-              <a href="/">SLDF 2026</a>
-            </li>
-            <li>
-              <a href="/">Floor Plan</a>
-            </li>
-            <li>
-              <a href="/">참가 브랜드</a>
-            </li>
-            <li>
-              <a href="/">디자이너 초이스</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          부대행사
-          <ul>
-            <li>
-              <a href="/">글로벌 콘퍼런스</a>
-            </li>
-            <li>
-              <a href="/">리빙 디자인 어워드</a>
-            </li>
-            <li>
-              <a href="/">리빙 디자인 스팟</a>
-            </li>
-            <li>
-              <a href="/">비즈매칭 상담회</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          관람 안내
-          <ul>
-            <li>
-              <a href="/"></a>
-            </li>
-            <li>
-              <a href="/"></a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          참가 안내
-          <ul>
-            <li>
-              <a href="/"></a>
-            </li>
-            <li>
-              <a href="/"></a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          공지사항
-          <ul>
-            <li>
-              <a href="/"></a>
-            </li>
-            <li>
-              <a href="/"></a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="/">참가자 로그인</a>
-          <button type="button">EN</button>
-        </li>
-      </ul>
+      {isMenuOpen ? (
+        <ul className="bottom-area-m">
+          <li onClick={() => toggleSubMenuOpen(0)}>
+            <div>
+              <p>전시 소개</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">서울리빙디자인페어</a>
+              </li>
+              <li>
+                <a href="/">주최 및 파트너</a>
+              </li>
+              <li>
+                <a href="/">아카이브</a>
+              </li>
+            </ul>
+          </li>
+          <li onClick={() => toggleSubMenuOpen(1)}>
+            <div>
+              <p>전시 구성</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">SLDF 2026</a>
+              </li>
+              <li>
+                <a href="/">Floor Plan</a>
+              </li>
+              <li>
+                <a href="/">참가 브랜드</a>
+              </li>
+              <li>
+                <a href="/">디자이너 초이스</a>
+              </li>
+            </ul>
+          </li>
+          <li onClick={() => toggleSubMenuOpen(2)}>
+            <div>
+              <p>부대행사</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">글로벌 콘퍼런스</a>
+              </li>
+              <li>
+                <a href="/">리빙 디자인 어워드</a>
+              </li>
+              <li>
+                <a href="/">리빙 디자인 스팟</a>
+              </li>
+              <li>
+                <a href="/">비즈매칭 상담회</a>
+              </li>
+            </ul>
+          </li>
+          <li onClick={() => toggleSubMenuOpen(3)}>
+            <div>
+              <p>관람 안내</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">관람 / 예매</a>
+              </li>
+              <li>
+                <a href="/">숙박 / 교통 / 관광</a>
+              </li>
+            </ul>
+          </li>
+          <li onClick={() => toggleSubMenuOpen(4)}>
+            <div>
+              <p>참가 안내</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">2026 부스 참가</a>
+              </li>
+              <li>
+                <a href="/">미디어 패키지</a>
+              </li>
+            </ul>
+          </li>
+          <li onClick={() => toggleSubMenuOpen(5)}>
+            <div>
+              <p>공지사항</p>
+              <Image src={arrowDownImg} alt="열기 화살표 모양" />
+            </div>
+            <ul>
+              <li>
+                <a href="/">공지사항</a>
+              </li>
+              <li>
+                <a href="/">FAQ</a>
+              </li>
+              <li>
+                <a href="/">고객지원</a>
+              </li>
+              <li>
+                <a href="/">개인정보취급방침</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="/">참가자 로그인</a>
+            <button type="button">EN</button>
+          </li>
+        </ul>
+      ) : null}
     </header>
   );
 }
